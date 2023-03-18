@@ -1,1 +1,1 @@
-# SQL queries on "car sales" dataset
+# SQL projects
