@@ -66,16 +66,17 @@ where continent is not null
 order by 1,2
 
 
--- Total Population vs Vaccinations
+-- COVID-19 Vaccination Coverage: Doses Administered per Capita
+-- This measure indicates the total number of vaccine doses that have been injected into the population.(can be 1 or 2 jabs per person)
 
-SELECT location, round(vaccinated / population,3) as vaccinated_population
-FROM
-(Select d.location, d.population, max(v.new_vaccinations) vaccinated
+Select d.location, ROUND(SUM(CONVERT(int,v.new_vaccinations)) / d.population *100,2) as Doses_injected_percentage
 From PortfolioProject..CovidDeaths d
 Join PortfolioProject..CovidVaccinations v
 	On d.location = v.location
+	and d.date = v.date
 where d.continent is not null
-group by d.location, d.population) t1
+group by d.location, d.population
+order by Doses_injected_percentage desc
 
 
 -- Shows Timeline Of Percentage of Population that has recieved at least one Covid Vaccine
