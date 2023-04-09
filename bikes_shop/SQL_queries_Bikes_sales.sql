@@ -4,6 +4,7 @@ SQL type: TSQL
 */
 
 
+-------------------------------------------------------------------------
 -- We will create a VIEW that includes all the required information from various tables by joining them together, which will be used for our work
 
 CREATE VIEW main_table
@@ -44,6 +45,7 @@ GROUP BY
 		CONCAT(sta.first_name, ' ', sta.last_name)
 
 
+-------------------------------------------------------------------------
 -- Total revenues by date
 
 SELECT  order_date,
@@ -53,6 +55,7 @@ GROUP BY order_date
 ORDER BY order_date
 
 
+-------------------------------------------------------------------------
 -- Total revenues by year
 
 SELECT  DATEPART(year, order_date) AS Year,
@@ -62,6 +65,7 @@ GROUP BY DATEPART(year, order_date)
 ORDER BY DATEPART(year, order_date)
 
 
+-------------------------------------------------------------------------
 -- Total revenues by year,month
 
 SELECT  DATEPART(year, order_date) AS Year,
@@ -73,6 +77,7 @@ GROUP BY DATEPART(year, order_date), DATENAME(month, order_date), DATEPART(month
 ORDER BY DATEPART(year, order_date), DATEPART(month, order_date)
 
 
+-------------------------------------------------------------------------
 -- Revenues by state, store
 
 SELECT	state, store_name, SUM(revenue) as revenue
@@ -81,6 +86,7 @@ GROUP BY state, store_name
 ORDER BY SUM(revenue)
 
 
+-------------------------------------------------------------------------
 -- Revenue by category
 
 SELECT	category_name, SUM(revenue) AS revenue
@@ -89,6 +95,7 @@ GROUP BY category_name
 ORDER BY SUM(revenue)
 
 
+-------------------------------------------------------------------------
 -- Top customers by revenue
 
 SELECT customers, SUM(revenue) AS revenue
@@ -96,6 +103,7 @@ FROM main_table
 GROUP BY customers
 
 
+-------------------------------------------------------------------------
 -- Top sales representatives
 
 SELECT sales_rep, SUM(revenue) AS revenue
