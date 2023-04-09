@@ -4,6 +4,7 @@ SQL type: TSQL
 */
 
 
+-------------------------------------------------------------------------
 -- Select Data that we are going to be starting with
 
 Select Location, date, total_cases, new_cases, total_deaths, population
@@ -12,6 +13,7 @@ Where continent is not null
 order by 1,2
 
 
+-------------------------------------------------------------------------
 -- Total Deaths vs Total Cases
 -- Specificly in the UK
 Select Location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 as DeathPercentage
@@ -21,6 +23,7 @@ and continent is not null
 order by 1,2
 
 
+-------------------------------------------------------------------------
 -- Total Cases vs Population
 -- Shows what percentage of population infected with Covid
 
@@ -30,6 +33,7 @@ From PortfolioProject..CovidDeaths
 order by 1,2
 
 
+-------------------------------------------------------------------------
 -- Countries with Highest Infection Rate compared to Population
 
 Select Location, Population, MAX(total_cases) as HighestInfectionCount,  Max((total_cases/population))*100 as PercentPopulationInfected
@@ -39,6 +43,7 @@ Group by Location, Population
 order by PercentPopulationInfected desc
 
 
+-------------------------------------------------------------------------
 -- Countries with Highest Death Count per Population
 
 Select Location, MAX(cast(Total_deaths as int)) as TotalDeathCount
@@ -49,6 +54,7 @@ Group by Location
 order by TotalDeathCount desc
 
 
+-------------------------------------------------------------------------
 -- Showing contintents with the highest death count per population
 
 Select continent, MAX(cast(Total_deaths as int)) as TotalDeathCount
@@ -58,6 +64,7 @@ Group by continent
 order by TotalDeathCount desc
 
 
+-------------------------------------------------------------------------
 -- Global numbers
 --Total deaths vs Total Cases
 Select SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deaths, SUM(cast(new_deaths as int))/SUM(New_Cases)*100 as DeathPercentage
@@ -66,6 +73,7 @@ where continent is not null
 order by 1,2
 
 
+-------------------------------------------------------------------------
 -- COVID-19 Vaccination Coverage: Doses Administered per Capita
 -- This measure indicates the total number of vaccine doses that have been injected into the population.(can be 1 or 2 jabs per person)
 
@@ -79,6 +87,7 @@ group by d.location, d.population
 order by Doses_injected_percentage desc
 
 
+-------------------------------------------------------------------------
 -- Shows Timeline Of Percentage of Population that has recieved at least one Covid Vaccine
 -- Utilizing CTE and Window functions
 
@@ -97,6 +106,7 @@ Select *, (RollingPeopleVaccinated/Population)*100 AS Vac_Population_Percentage
 From PopvsVac
 
 
+-------------------------------------------------------------------------
 -- Using Temp Table to perform Calculation on Partition By in previous query
 
 DROP Table if exists #PercentPopulationVaccinated
@@ -124,6 +134,7 @@ Select *, (RollingPeopleVaccinated/Population)*100 AS Vac_Population_Percentage
 From #PercentPopulationVaccinated
 
 
+-------------------------------------------------------------------------
 -- Creating View to store data for later visualizations
 
 Create View PercentPopulationVaccinated as
