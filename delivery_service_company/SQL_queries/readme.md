@@ -1,0 +1,4 @@
+- Data exploration queries (not included in Tableau visualizations)
+- User and courier analysis queries
+- Economic metric queries
+- Marketing campaign analysis queries
